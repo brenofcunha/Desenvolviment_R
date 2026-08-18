@@ -1,4 +1,5 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -27,6 +28,34 @@ class MetasEndpointsTests(APITestCase):
 		self.assertEqual(response.status_code, status.HTTP_200_OK)
 		self.assertIn('results', response.data)
 		self.assertEqual(len(response.data['results']), 2)
+
+
+class AuthEndpointsTests(APITestCase):
+	def test_post_auth_cadastro_cria_usuario(self):
+		payload = {
+			'username': 'breno',
+			'email': 'breno@email.com',
+			'password': 'senha123',
+		}
+
+		response = self.client.post('/auth/cadastro/', payload, format='json')
+
+		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+		self.assertEqual(User.objects.filter(username='breno').count(), 1)
+		self.assertNotIn('password', response.data)
+
+	def test_post_auth_login_retorna_tokens(self):
+		User.objects.create_user(username='breno', email='breno@email.com', password='senha123')
+
+		response = self.client.post(
+			'/auth/login/',
+			{'username': 'breno', 'password': 'senha123'},
+			format='json',
+		)
+
+		self.assertEqual(response.status_code, status.HTTP_200_OK)
+		self.assertIn('access', response.data)
+		self.assertIn('refresh', response.data)
 
 	def test_get_metas_id_retorna_uma_meta(self):
 		meta = Meta.objects.create(titulo='Meta detalhada', descricao='Descricao')
