@@ -1,4 +1,4 @@
-![alt text](image.png)
+![alt text](imgs/image.png)
 
 status na Meta tem três estados: em_andamento, pausada e concluida. Quando uma meta é concluída, o campo concluida_em registra a data — isso vai te permitir exibir o histórico completo da trajetória até a conquista, que é o coração do projeto.
 
