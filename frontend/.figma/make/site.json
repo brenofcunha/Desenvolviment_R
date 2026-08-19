@@ -1,0 +1,10 @@
+{
+  "description": "Track and manage personal goals with a user-friendly interface, allowing users to create, log, and visualize their progress through timelines and records.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
