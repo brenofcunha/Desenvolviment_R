@@ -1,7 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
+
+Usuario = get_user_model()
 
 from .models import Meta, Registro
 
@@ -41,11 +43,11 @@ class AuthEndpointsTests(APITestCase):
 		response = self.client.post('/auth/cadastro/', payload, format='json')
 
 		self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-		self.assertEqual(User.objects.filter(username='breno').count(), 1)
+		self.assertEqual(Usuario.objects.filter(username='breno').count(), 1)
 		self.assertNotIn('password', response.data)
 
 	def test_post_auth_login_retorna_tokens(self):
-		User.objects.create_user(username='breno', email='breno@email.com', password='senha123')
+		Usuario.objects.create_user(username='breno', email='breno@email.com', password='senha123')
 
 		response = self.client.post(
 			'/auth/login/',

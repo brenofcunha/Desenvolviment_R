@@ -3,3 +3,6 @@ djangorestframework
 django-cors-headers
 Pillow
 djangorestframework-simplejwt
+python-decouple
+psycopg2-binary
+dj-database-url

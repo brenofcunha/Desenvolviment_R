@@ -1,4 +1,12 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+
+class Usuario(AbstractUser):
+	class Meta:
+		verbose_name = 'usuário'
+		verbose_name_plural = 'usuários'
+
 
 class Meta(models.Model):
 	titulo = models.CharField(max_length=120)
